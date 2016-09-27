@@ -14,6 +14,7 @@ namespace AntCreeping
         private int velocity;
         private int position;
 
+        #region getter&setter
         public int Left
         {
             get
@@ -78,6 +79,8 @@ namespace AntCreeping
                 position = value;
             }
         }
+        #endregion
+
 
         public Ant(int creepingDirection, int velocity, int position)
         {
@@ -93,6 +96,30 @@ namespace AntCreeping
             this.creepingDirection = creepingDirection;
             this.velocity = velocity;
             this.position = position;
+        }
+        
+
+        /// <summary>
+        /// change ant's creeping direction
+        /// </summary>
+        private void changeCreepDirection()
+        {
+
+        }
+        
+        /// <summary>
+        /// judge whether the ant has collision with another ant
+        /// </summary>
+        /// <param name="anotherAnt">another Ant</param>
+        /// <returns>true represents having collision</returns>
+        public bool isHavingCollisionWith(Ant anotherAnt)
+        {
+            return true;
+        }
+
+        private void creeping(int incTime)
+        {
+
         }
     }
 }

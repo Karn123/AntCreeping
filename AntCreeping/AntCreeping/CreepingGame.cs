@@ -8,5 +8,8 @@ namespace AntCreeping
 {
     class CreepingGame
     {
+        public int currentTime;
+        public bool isGameOver;
+
     }
 }
