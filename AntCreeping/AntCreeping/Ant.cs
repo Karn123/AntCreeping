@@ -58,7 +58,7 @@ namespace AntCreeping
         public Ant()
         {
             position = 30;
-            velocity = 5;
+            velocity = 5; 
             toward = Toward.right;
         }
 
