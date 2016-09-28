@@ -8,49 +8,21 @@ namespace AntCreeping
 {
     class Ant
     {
-        private int left;
-        private int right;
-        private int creepingDirection;
-        private int velocity;
         private int position;
+        private Toward toward;
+        private int velocity;
 
         #region getter&setter
-        public int Left
+        public int Position
         {
             get
             {
-                return left;
+                return position;
             }
 
             set
             {
-                left = value;
-            }
-        }
-
-        public int Right
-        {
-            get
-            {
-                return right;
-            }
-
-            set
-            {
-                right = value;
-            }
-        }
-
-        public int CreepingDirection
-        {
-            get
-            {
-                return creepingDirection;
-            }
-
-            set
-            {
-                creepingDirection = value;
+                position = value;
             }
         }
 
@@ -67,44 +39,50 @@ namespace AntCreeping
             }
         }
 
-        public int Position
+        public Toward CreepingToward
         {
             get
             {
-                return position;
+                return toward;
             }
 
             set
             {
-                position = value;
+                toward = value;
             }
         }
+
         #endregion
 
-
-        public Ant(int creepingDirection, int velocity, int position)
+        #region constructors
+        public Ant()
         {
-            this.creepingDirection = creepingDirection;
-            this.velocity = velocity;
-            this.position = position;
+            position = 30;
+            velocity = 5;
+            toward = Toward.right;
         }
 
-        public Ant(int left, int right, int creepingDirection, int velocity, int position)
+        public Ant(Toward toward, int velocity)
         {
-            this.left = left;
-            this.right = right;
-            this.creepingDirection = creepingDirection;
+            this.toward = toward;
             this.velocity = velocity;
-            this.position = position;
         }
-        
 
+        public Ant(int position, Toward toward, int velocity)
+        {
+            this.position = position;
+            this.toward = toward;
+            this.velocity = velocity;
+        }
+        #endregion
         /// <summary>
         /// change ant's creeping direction
         /// </summary>
         private void changeCreepDirection()
         {
-
+            if (toward == Toward.left)
+                toward = Toward.right;
+            else toward = Toward.left;
         }
         
         /// <summary>
@@ -114,12 +92,17 @@ namespace AntCreeping
         /// <returns>true represents having collision</returns>
         public bool isHavingCollisionWith(Ant anotherAnt)
         {
-            return true;
+            return (position == anotherAnt.Position);
         }
-
+        /// <summary>
+        /// creeping for incTime Time
+        /// </summary>
+        /// <param name="incTime">creeping time</param>
         private void creeping(int incTime)
         {
-
+            if (toward == Toward.left)
+                position -= incTime * velocity;
+            else position += incTime * velocity;
         }
     }
 }

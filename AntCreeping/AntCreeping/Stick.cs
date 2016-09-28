@@ -9,49 +9,41 @@ namespace AntCreeping
     class Stick
     {
         /// <summary>
-        /// minimum distance to the left end of the stick
-        /// </summary>
-        public int minPos;
-        /// <summary>
         /// maximum distance to the left end of the stick 
         /// </summary>
-        public int maxPos;
+        public int length;
         #region getters and setters
-        public int MinPos
+        public int Length
         {
             get
             {
-                return minPos;
+                return length;
             }
 
             set
             {
-                minPos = value;
+                length = value;
             }
         }
-
-        public int MaxPos
-        {
-            get
-            {
-                return maxPos;
-            }
-
-            set
-            {
-                maxPos = value;
-            }
-        }
+       
         #endregion
 
+        public Stick()
+        {
+            length = 300;
+        }
         public Stick(int length)
         {
-            maxPos = length;
+            this.length = length;
         }
-
+        /// <summary>
+        /// judge whether any of the ants is out of the stick
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
         public bool isOutOfRange(int pos)
         {
-            return (pos <= minPos || pos >= maxPos);
-            }
+            return (pos <= 0 || pos >= length);
+        }   
     }
 }
