@@ -64,6 +64,7 @@ namespace AntCreeping
         public void removeAnt(Ant ant)
         {
             AntList.Remove(ant);
+            antHt.Remove(ant.Position);
             if (AntList.Count == 0)
                 isGameOver = true;
         }
@@ -85,7 +86,7 @@ namespace AntCreeping
                         removeAnt(ant);
                         continue;
                     }
-                    int pos = ant.Position;
+                    float pos = ant.Position;
                     if(isHavingCollision(ant))
                     {
                         Ant collisionAnt = (Ant)antHt[ant.Position];
@@ -93,18 +94,20 @@ namespace AntCreeping
                         {
                             if (collisionAnt.Velocity > ant.Velocity)
                             {
-                                collisionAnt.changeCreepDirection();
-                                int i = antList.FindIndex( x => x.Equals((Ant)antHt[ant.Position]));
-                                antList[i] = collisionAnt;
-                            }
+                                //collisionAnt.changeCreepDirection();
+                                //int i = antList.FindIndex( x => x.Equals((Ant)antHt[ant.Position]));
+                                //antList[i] = collisionAnt;
+                                ((Ant)antHt[ant.Position]).changeCreepDirection();
+                            }   
                             else
                                 ant.changeCreepDirection();
                         }
                         else
                         {
-                            collisionAnt.changeCreepDirection();
-                            int i = antList.FindIndex(x => x.Equals((Ant)antHt[ant.Position]));
-                            antList[i] = collisionAnt;
+                            //collisionAnt.changeCreepDirection();
+                            //int i = antList.FindIndex(x => x.Equals((Ant)antHt[ant.Position]));
+                            //antList[i] = collisionAnt;
+                            ((Ant)antHt[ant.Position]).changeCreepDirection();
                             ant.changeCreepDirection();
                         }
                     }
@@ -129,7 +132,7 @@ namespace AntCreeping
             #region 定时器事件 
             aTimer = new Timer();
             aTimer.Elapsed += new ElapsedEventHandler(TimedEvent);
-            aTimer.Interval = 1000;    //配置文件中配置的秒数
+            aTimer.Interval = 16;    //配置文件中配置的秒数
             aTimer.Enabled = true;
             #endregion
         }

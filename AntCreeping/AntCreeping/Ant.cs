@@ -40,36 +40,11 @@ namespace AntCreeping
     }
     class Ant
     {
-        private int position;
+        private float position;
         private Toward toward;
-        private int velocity;
+        private float velocity;
         public Neighbours antNeighbours; 
         #region getter&setter
-        public int Position
-        {
-            get
-            {
-                return position;
-            }
-
-            set
-            {
-                position = value;
-            }
-        }
-
-        public int Velocity
-        {
-            get
-            {
-                return velocity;
-            }
-
-            set
-            {
-                velocity = value;
-            }
-        }
 
         public Toward CreepingToward
         {
@@ -97,6 +72,32 @@ namespace AntCreeping
             }
         }
 
+        public float Velocity
+        {
+            get
+            {
+                return velocity;
+            }
+
+            set
+            {
+                velocity = value;
+            }
+        }
+
+        public float Position
+        {
+            get
+            {
+                return position;
+            }
+
+            set
+            {
+                position = value;
+            }
+        }
+
         #endregion
 
         #region constructors
@@ -104,22 +105,22 @@ namespace AntCreeping
         {
             antNeighbours.LeftNeighbour = null;
             antNeighbours.RightNeighbour = null;
-            position = 30;
-            velocity = 5; 
+            Position = 30f;
+            Velocity = 5f; 
             toward = Toward.right;
         }
 
-        public Ant(Toward toward, int velocity)
+        public Ant(Toward toward, float velocity)
         {
             this.toward = toward;
-            this.velocity = velocity;
+            this.Velocity = velocity;
         }
 
-        public Ant(int position, Toward toward, int velocity)
+        public Ant(float position, Toward toward, float velocity)
         {
-            this.position = position;
+            this.Position = position;
             this.toward = toward;
-            this.velocity = velocity;
+            this.Velocity = velocity;
         }
         #endregion
         /// <summary>
@@ -168,8 +169,8 @@ namespace AntCreeping
         public void creeping(int incTime)
         {
             if (toward == Toward.left)
-                position -= incTime * velocity;
-            else position += incTime * velocity;
+                Position -= incTime * Velocity;
+            else Position += incTime * Velocity;
         }
     }
 }

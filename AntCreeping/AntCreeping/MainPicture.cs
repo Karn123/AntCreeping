@@ -65,7 +65,7 @@ namespace AntCreeping
             //EndDraw();
         }
 
-        public void DrawAnt(int leftPosition, Toward toward)
+        public void DrawAnt(float leftPosition, Toward toward)
         {
             MyDrawCircle(leftPosition);
             //MyDrawLine(leftPosition, toward, 1);
@@ -96,7 +96,7 @@ namespace AntCreeping
             g.Dispose();
         }
 
-        protected void MyDrawCircle(int leftPosition)
+        protected void MyDrawCircle(float leftPosition)
         {
             //Bitmap newBitmap = (Bitmap)originBmp.Clone();
             //Graphics g = Graphics.FromImage(newBitmap);
@@ -125,7 +125,6 @@ namespace AntCreeping
             //Graphics tempGraphics = Graphics.FromImage(originBmp);
             //tempGraphics.DrawImage(finishingBmp, 0, 0);
             //tempGraphics.Dispose();
-
             mainPictureGraphics.DrawImage(finishingBmp, new Point(0, 0));
         }
 
@@ -137,7 +136,6 @@ namespace AntCreeping
             g.Dispose();
             //originBmp = bmp;
             finishingBmp = bmp;
-        
         }
     }
 }

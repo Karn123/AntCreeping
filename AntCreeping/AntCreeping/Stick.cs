@@ -41,7 +41,7 @@ namespace AntCreeping
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
-        public bool isOutOfRange(int pos)
+        public bool isOutOfRange(float pos)
         {
             return (pos <= 0 || pos >= length);
         }   
