@@ -137,6 +137,7 @@ namespace AntCreeping
             g.Dispose();
             //originBmp = bmp;
             finishingBmp = bmp;
+        
         }
     }
 }
