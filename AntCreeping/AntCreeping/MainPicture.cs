@@ -62,59 +62,71 @@ namespace AntCreeping
         public void DrawStick(int length)
         {
             MyDrawLine(length);
-            EndDraw();
+            //EndDraw();
         }
 
         public void DrawAnt(int leftPosition, Toward toward)
         {
             MyDrawCircle(leftPosition);
             //MyDrawLine(leftPosition, toward, 1);
-            EndDraw();
+            //EndDraw();
         }
 
         protected void MyDrawLine(int length)
         {
-            Bitmap newBitmap = (Bitmap)originBmp.Clone();
-            Graphics g = Graphics.FromImage(newBitmap);
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            Pen p = new Pen(nowColor, 10f);
+            //Bitmap newBitmap = (Bitmap)originBmp.Clone();
+            //Graphics g = Graphics.FromImage(newBitmap);
+            //g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            //Pen p = new Pen(nowColor, 10f);
+            //g.DrawLine(p, startPoint.X, startPoint.Y, startPoint.X + length, startPoint.Y);
+            ////g.dr(p,new Rectangle(startPoint.X, startPoint.Y, startPoint.X+length, startPoint.Y));
+            //g.Dispose();
+            //p.Dispose();
+
+            //g = Graphics.FromImage(finishingBmp);
+            //g.DrawImage(newBitmap, new Point(0, 0));
+            //g.Dispose();
+
+            ////mainPictureGraphics.DrawImage(newBitmap, new Point(0, 0));
+            //newBitmap.Dispose();
+
+            Graphics g = Graphics.FromImage(finishingBmp);
+            Pen p = new Pen(nowColor, antWidth);
             g.DrawLine(p, startPoint.X, startPoint.Y, startPoint.X + length, startPoint.Y);
-            //g.dr(p,new Rectangle(startPoint.X, startPoint.Y, startPoint.X+length, startPoint.Y));
             g.Dispose();
-            p.Dispose();
-
-            g = Graphics.FromImage(finishingBmp);
-            g.DrawImage(newBitmap, new Point(0, 0));
-            g.Dispose();
-
-            mainPictureGraphics.DrawImage(newBitmap, new Point(0, 0));
-            newBitmap.Dispose();
         }
 
         protected void MyDrawCircle(int leftPosition)
         {
-            Bitmap newBitmap = (Bitmap)originBmp.Clone();
-            Graphics g = Graphics.FromImage(newBitmap);
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            //Bitmap newBitmap = (Bitmap)originBmp.Clone();
+            //Graphics g = Graphics.FromImage(newBitmap);
+            //g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            //Pen p = new Pen(nowColor, antWidth);
+            //g.DrawEllipse(p, startPoint.X + leftPosition, startPoint.Y - antWidth * 2, antWidth, antWidth);
+            //g.Dispose();
+            //p.Dispose();
+
+            //g = Graphics.FromImage(finishingBmp);
+            //g.DrawImage(newBitmap, new Point(0, 0));
+            //g.Dispose();
+
+            ////mainPictureGraphics.DrawImage(newBitmap, new Point(0, 0));
+            //newBitmap.Dispose();
+
+            Graphics g = Graphics.FromImage(finishingBmp);
             Pen p = new Pen(nowColor, antWidth);
             g.DrawEllipse(p, startPoint.X + leftPosition, startPoint.Y - antWidth * 2, antWidth, antWidth);
             g.Dispose();
-            p.Dispose();
-
-            g = Graphics.FromImage(finishingBmp);
-            g.DrawImage(newBitmap, new Point(0, 0));
-            g.Dispose();
-
-            mainPictureGraphics.DrawImage(newBitmap, new Point(0, 0));
-            newBitmap.Dispose();
         }
 
-        private void EndDraw()
+        public void EndDraw()
         {
             //为了让完成后的绘图过程保留下来，要将中间图片绘制到原始画布上
-            Graphics tempGraphics = Graphics.FromImage(originBmp);
-            tempGraphics.DrawImage(finishingBmp, 0, 0);
-            tempGraphics.Dispose();
+            //Graphics tempGraphics = Graphics.FromImage(originBmp);
+            //tempGraphics.DrawImage(finishingBmp, 0, 0);
+            //tempGraphics.Dispose();
+
+            mainPictureGraphics.DrawImage(finishingBmp, new Point(0, 0));
         }
 
         public void Clear()
@@ -123,7 +135,7 @@ namespace AntCreeping
             Graphics g = Graphics.FromImage(bmp);
             g.Clear(Color.White);
             g.Dispose();
-            originBmp = bmp;
+            //originBmp = bmp;
             finishingBmp = bmp;
         }
     }

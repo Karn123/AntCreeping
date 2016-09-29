@@ -117,6 +117,7 @@ namespace AntCreeping
                 {
                     MainPicture.GetInstance().DrawAnt(antList[i].Position,antList[i].CreepingToward);
                 }
+                MainPicture.GetInstance().EndDraw();
             }
         }
 
@@ -128,7 +129,7 @@ namespace AntCreeping
             #region 定时器事件 
             aTimer = new Timer();
             aTimer.Elapsed += new ElapsedEventHandler(TimedEvent);
-            aTimer.Interval = 1 * 1000;    //配置文件中配置的秒数
+            aTimer.Interval = 1000;    //配置文件中配置的秒数
             aTimer.Enabled = true;
             #endregion
         }

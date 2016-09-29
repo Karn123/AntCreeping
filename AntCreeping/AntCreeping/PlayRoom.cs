@@ -12,11 +12,12 @@ namespace AntCreeping
     /// MainPicture.GetInstance().Clear();
     /// MainPicture.GetInstance().DrawStick(MAXLENGTH);
     /// MainPicture.GetInstance().DrawAnt(leftPosition, toward);
+    /// MainPicture.GetInstance().EndDraw();
     /// </summary>
     class PlayRoom
     {
         public bool isStart = false;
-        public const int MAXLENGTH = 300;
+        public const int MAXLENGTH = 500;
         public Toward toward;
         public CreepingGame creeepingGame;
         public List<Ant> antList;
@@ -27,7 +28,7 @@ namespace AntCreeping
         public int pos_3 = 110;
         public int pos_4 = 160;
         public int pos_5 = 250;
-        public int default_velocity = 5;
+        public int default_velocity = 1;
 
         public PlayRoom()
         {
@@ -97,6 +98,7 @@ namespace AntCreeping
             MainPicture.GetInstance().Clear();
             MainPicture.GetInstance().DrawStick(MAXLENGTH);
             drawFiveAnts();
+            MainPicture.GetInstance().EndDraw();
             //set each ant's direction
             for (int i = 0; i < 2; i++)
             {

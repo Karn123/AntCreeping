@@ -74,5 +74,11 @@ namespace AntCreeping
         {
 
         }
+
+        private void MainTimer_Tick(object sender, EventArgs e)
+        {
+            //计算蚂蚁位置，转向
+            //在UI上绘制图形
+        }
     }
 }
