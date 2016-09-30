@@ -6,15 +6,19 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
+using System.Timers;
 
 namespace AntCreeping
 {
     public partial class Form1 : Form
     {
-        DateTime startTime;
-        DateTime nowTime;
+        float startTime;
+        float nowTime;
         PlayRoom playroom;
+        private System.Timers.Timer aTimer;
+        Thread playRoomThread;
 
         public Form1()
         {
@@ -28,9 +32,8 @@ namespace AntCreeping
             {
                 playroom.isStart = false;
                 b.Text = "Start";
-                nowTime = DateTime.Now;
                 //TimeSpan timeInterval = (nowTime - startTime);
-                int timeInterval = (nowTime - startTime).Milliseconds;
+                float timeInterval = nowTime - startTime;
                 TimeLabel.Text = timeInterval.ToString() + "ms";
 
                 //clear the picture box and cache
@@ -40,16 +43,28 @@ namespace AntCreeping
                 g.Clear(this.MainPictureBox.BackColor);
                 g.Dispose();
                 MainPicture mp = MainPicture.GetInstance();
-                //mp.originBmp = bmp;
-                //mp.finishingBmp = bmp;
                 mp.Clear();
+
+                try
+                {
+                    playRoomThread.Abort();
+                }
+                catch
+                {
+
+                }
             }
             else
             {
                 playroom.isStart = true;
                 b.Text = "Stop";
-                playroom.PlayGames();
-                startTime = DateTime.Now;
+
+                playRoomThread = new Thread(new ThreadStart(playroom.PlayGames));
+                playRoomThread.Start();
+
+                TimerSetup();
+                startTime = 0;
+                nowTime = 0;
                 TimeLabel.Text = "";
             }
         }
@@ -75,10 +90,52 @@ namespace AntCreeping
 
         }
 
-        private void MainTimer_Tick(object sender, EventArgs e)
+        public void TimerSetup()
         {
-            //计算蚂蚁位置，转向
-            //在UI上绘制图形
+            #region 定时器事件 
+            aTimer = new System.Timers.Timer();
+            aTimer.Elapsed += new ElapsedEventHandler(TimedEvent);
+            aTimer.Interval = 16;    //配置文件中配置的秒数
+            aTimer.Enabled = true;
+            #endregion
+        }
+
+        private void TimedEvent(object sender, ElapsedEventArgs e)
+        {
+            if (!playroom.isReady)
+            {
+                startTime = 0;
+                nowTime = 0;
+                return;
+            }
+            nowTime += (float)aTimer.Interval;
+            if (playroom.creeepingGame.IsGameOver)
+            {
+                MainPicture.GetInstance().Clear();
+                MainPicture.GetInstance().DrawStick(playroom.creeepingGame.AntStick.Length);
+                for (int i = 0; i < playroom.creeepingGame.AntList.Count; i++)
+                {
+                    MainPicture.GetInstance().DrawAnt(playroom.creeepingGame.AntList[i].Position, playroom.creeepingGame.AntList[i].CreepingToward);
+                }
+                MainPicture.GetInstance().EndDraw();
+                //aTimer.Enabled = false;
+                playroom.isReady = false;
+            }
+            else
+            {
+                playroom.creeepingGame.drivingGame();
+                if (!playroom.creeepingGame.IsGameOver)
+                {
+                    MainPicture.GetInstance().Clear();
+                    MainPicture.GetInstance().DrawStick(playroom.creeepingGame.AntStick.Length);
+                    for (int i = 0; i < playroom.creeepingGame.AntList.Count; i++)
+                    {
+                        Console.WriteLine(playroom.creeepingGame.AntList.Count);
+                        MainPicture.GetInstance().DrawAnt(playroom.creeepingGame.AntList[i].Position, playroom.creeepingGame.AntList[i].CreepingToward);
+                    }
+                    MainPicture.GetInstance().EndDraw();
+                }
+            }
         }
     }
 }

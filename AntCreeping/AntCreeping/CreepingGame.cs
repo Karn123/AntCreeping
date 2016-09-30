@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Timers;
 
 namespace AntCreeping
@@ -14,7 +15,6 @@ namespace AntCreeping
         private List<Ant> antList;
         private Stick antStick;
         private Hashtable antHt = new Hashtable();
-        private Timer aTimer;
         public CreepingGame()
         {
             AntList = new List<Ant>();
@@ -78,8 +78,9 @@ namespace AntCreeping
             if (!isGameOver)
             {
                 antHt.Clear();
-                foreach (Ant ant in AntList)
+                for(int i=0;i<antList.Count;i++)
                 {
+                    Ant  ant = antList[i];
                     ant.creeping(1);
                     if (AntStick.isOutOfRange(ant.Position))
                     {
@@ -114,35 +115,12 @@ namespace AntCreeping
                     else
                         antHt.Add(pos, ant);
                 }
-                MainPicture.GetInstance().Clear();
-                MainPicture.GetInstance().DrawStick(AntStick.Length);
-                for (int i = 0; i < antList.Count; i++)
-                {
-                    MainPicture.GetInstance().DrawAnt(antList[i].Position,antList[i].CreepingToward);
-                }
-                MainPicture.GetInstance().EndDraw();
             }
         }
-
-        public void playGame(List<Ant> myAntList,Stick myStick)
+        public void SetListAndStick(List<Ant> myAntList, Stick myStick)
         {
             AntList = myAntList;
             AntStick = myStick;
-
-            #region 定时器事件 
-            aTimer = new Timer();
-            aTimer.Elapsed += new ElapsedEventHandler(TimedEvent);
-            aTimer.Interval = 16;    //配置文件中配置的秒数
-            aTimer.Enabled = true;
-            #endregion
-        }
-
-        private void TimedEvent(object sender, ElapsedEventArgs e)
-        {
-            if (isGameOver)
-                aTimer.Enabled = false;
-            else
-                drivingGame();
         }
     }
 } 

@@ -28,7 +28,8 @@ namespace AntCreeping
         public int pos_3 = 110;
         public int pos_4 = 160;
         public int pos_5 = 250;
-        public int default_velocity = 1;
+        public int default_velocity = 5;
+        public bool isReady = false;
 
         public PlayRoom()
         {
@@ -104,23 +105,34 @@ namespace AntCreeping
             {
                 toward = setDirection(i);
                 addAnt(pos_1, toward);
+                //Console.WriteLine("1");
                 for (int j = 0; j < 2; j++)
                 {
                     toward = setDirection(j);
                     addAnt(pos_2, toward);
+                    //Console.WriteLine("2");
                     for (int k = 0; k < 2; k++)
                     {
                         toward = setDirection(k);
                         addAnt(pos_3, toward);
-                        for(int l = 0;l < 2;l++)
+                        //Console.WriteLine("3");
+                        for (int l = 0;l < 2;l++)
                         {
                             toward = setDirection(l);
                             addAnt(pos_4, toward);
+                            //Console.WriteLine("4");
                             for (int m = 0; m < 2; m++)
                             {
                                 toward = setDirection(m);
                                 addAnt(pos_5, toward);
-                                creeepingGame.playGame(antList,myStick);
+                                //Console.WriteLine("5");
+                                creeepingGame.SetListAndStick(antList,myStick);
+                                isReady = true;
+                                creeepingGame.IsGameOver = false;
+                                while (isReady == true)
+                                {
+                                    //Console.WriteLine(isReady);
+                                }
                             }
                         }
                     }

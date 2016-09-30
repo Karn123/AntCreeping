@@ -94,6 +94,7 @@ namespace AntCreeping
             Pen p = new Pen(nowColor, antWidth);
             g.DrawLine(p, startPoint.X, startPoint.Y, startPoint.X + length, startPoint.Y);
             g.Dispose();
+            p.Dispose();
         }
 
         protected void MyDrawCircle(float leftPosition)
@@ -117,6 +118,7 @@ namespace AntCreeping
             Pen p = new Pen(nowColor, antWidth);
             g.DrawEllipse(p, startPoint.X + leftPosition, startPoint.Y - antWidth * 2, antWidth, antWidth);
             g.Dispose();
+            p.Dispose();
         }
 
         public void EndDraw()
