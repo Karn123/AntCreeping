@@ -24,8 +24,8 @@ namespace AntCreeping
         private Color nowColor;
         private Point startPoint;
         private int antWidth = 5;
-        private int boxWidth;
-        private int boxHeight;
+        private int boxWidth = 0;
+        private int boxHeight = 0;
         MainPicture()
         {
         }
@@ -56,40 +56,28 @@ namespace AntCreeping
         protected void Initialize()
         {
             instance.nowColor = Color.Black;
-            startPoint = new Point(10, 100);
+            startPoint = new Point(100, 100);
+        }
+
+        public void Release()
+        {
+            mainPictureGraphics.Dispose();
+            mainPictureGraphics = null;
+            //instance = null;
         }
 
         public void DrawStick(int length)
         {
             MyDrawLine(length);
-            //EndDraw();
         }
 
         public void DrawAnt(float leftPosition, Toward toward)
         {
             MyDrawCircle(leftPosition);
-            //MyDrawLine(leftPosition, toward, 1);
-            //EndDraw();
         }
 
         protected void MyDrawLine(int length)
         {
-            //Bitmap newBitmap = (Bitmap)originBmp.Clone();
-            //Graphics g = Graphics.FromImage(newBitmap);
-            //g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            //Pen p = new Pen(nowColor, 10f);
-            //g.DrawLine(p, startPoint.X, startPoint.Y, startPoint.X + length, startPoint.Y);
-            ////g.dr(p,new Rectangle(startPoint.X, startPoint.Y, startPoint.X+length, startPoint.Y));
-            //g.Dispose();
-            //p.Dispose();
-
-            //g = Graphics.FromImage(finishingBmp);
-            //g.DrawImage(newBitmap, new Point(0, 0));
-            //g.Dispose();
-
-            ////mainPictureGraphics.DrawImage(newBitmap, new Point(0, 0));
-            //newBitmap.Dispose();
-
             Graphics g = Graphics.FromImage(finishingBmp);
             Pen p = new Pen(nowColor, antWidth);
             g.DrawLine(p, startPoint.X, startPoint.Y, startPoint.X + length, startPoint.Y);
@@ -99,21 +87,6 @@ namespace AntCreeping
 
         protected void MyDrawCircle(float leftPosition)
         {
-            //Bitmap newBitmap = (Bitmap)originBmp.Clone();
-            //Graphics g = Graphics.FromImage(newBitmap);
-            //g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            //Pen p = new Pen(nowColor, antWidth);
-            //g.DrawEllipse(p, startPoint.X + leftPosition, startPoint.Y - antWidth * 2, antWidth, antWidth);
-            //g.Dispose();
-            //p.Dispose();
-
-            //g = Graphics.FromImage(finishingBmp);
-            //g.DrawImage(newBitmap, new Point(0, 0));
-            //g.Dispose();
-
-            ////mainPictureGraphics.DrawImage(newBitmap, new Point(0, 0));
-            //newBitmap.Dispose();
-
             Graphics g = Graphics.FromImage(finishingBmp);
             Pen p = new Pen(nowColor, antWidth);
             g.DrawEllipse(p, startPoint.X + leftPosition, startPoint.Y - antWidth * 2, antWidth, antWidth);
@@ -132,12 +105,9 @@ namespace AntCreeping
 
         public void Clear()
         {
-            Bitmap bmp = new Bitmap(boxWidth, boxHeight);
-            Graphics g = Graphics.FromImage(bmp);
+            Graphics g = Graphics.FromImage(finishingBmp);
             g.Clear(Color.White);
             g.Dispose();
-            //originBmp = bmp;
-            finishingBmp = bmp;
         }
     }
 }
