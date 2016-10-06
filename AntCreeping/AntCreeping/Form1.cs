@@ -158,33 +158,57 @@ namespace AntCreeping
 
         private void TimedEvent(object sender, ElapsedEventArgs e)
         {
-            nowTime += (float)aTimer.Interval;
-            if (creepingGame.IsGameOver)
+            lock(this)
             {
-                MainPicture.GetInstance().Clear();
-                MainPicture.GetInstance().DrawStick(creepingGame.AntStick.Length);
-                for (int i = 0; i < creepingGame.AntList.Count; i++)
-                {
-                    MainPicture.GetInstance().DrawAnt(creepingGame.AntList[i].Position, creepingGame.AntList[i].CreepingToward);
-                }
-                MainPicture.GetInstance().EndDraw();
-                aTimer.Enabled = false;
-            }
-            else
-            {
-                creepingGame.drivingGame();
-                if (!creepingGame.IsGameOver)
+                nowTime += (float)aTimer.Interval;
+                if (creepingGame.IsGameOver)
                 {
                     MainPicture.GetInstance().Clear();
                     MainPicture.GetInstance().DrawStick(creepingGame.AntStick.Length);
                     for (int i = 0; i < creepingGame.AntList.Count; i++)
                     {
-                        Console.WriteLine(creepingGame.AntList.Count);
-                        MainPicture.GetInstance().DrawAnt(creepingGame.AntList[i].Position,creepingGame.AntList[i].CreepingToward);
+                        MainPicture.GetInstance().DrawAnt(creepingGame.AntList[i].Position, creepingGame.AntList[i].CreepingToward, GetColor(creepingGame.AntList[i].GetAntNumber()));
                     }
                     MainPicture.GetInstance().EndDraw();
+                    aTimer.Enabled = false;
+                }
+                else
+                {
+                    creepingGame.drivingGame();
+                    if (!creepingGame.IsGameOver)
+                    {
+                        MainPicture.GetInstance().Clear();
+                        MainPicture.GetInstance().DrawStick(creepingGame.AntStick.Length);
+                        for (int i = 0; i < creepingGame.AntList.Count; i++)
+                        {
+                            Console.WriteLine(creepingGame.AntList.Count);
+                            MainPicture.GetInstance().DrawAnt(creepingGame.AntList[i].Position, creepingGame.AntList[i].CreepingToward, GetColor(creepingGame.AntList[i].GetAntNumber()));
+                        }
+                        MainPicture.GetInstance().EndDraw();
+                    }
                 }
             }
+        }
+        
+        private Color GetColor(int i)
+        {
+            Color c = Color.Black;
+            switch (i)
+            {
+                case 1:c = Color.Blue;
+                    break;
+                case 2:c = Color.Gray;
+                    break;
+                case 3:c = Color.Purple;
+                    break;
+                case 4:c = Color.Green;
+                    break;
+                case 5:c = Color.AliceBlue;
+                    break;
+                default:
+                    break;
+            }
+            return c;
         }
     }
 }

@@ -61,8 +61,8 @@ namespace AntCreeping
 
         public void Release()
         {
-            mainPictureGraphics.Dispose();
-            mainPictureGraphics = null;
+            //mainPictureGraphics.Dispose();
+            //mainPictureGraphics = null;
             //instance = null;
         }
 
@@ -71,9 +71,9 @@ namespace AntCreeping
             MyDrawLine(length);
         }
 
-        public void DrawAnt(float leftPosition, Toward toward)
+        public void DrawAnt(float leftPosition, Toward toward, Color antColor)
         {
-            MyDrawCircle(leftPosition);
+            MyDrawCircle(leftPosition, antColor);
         }
 
         protected void MyDrawLine(int length)
@@ -85,10 +85,10 @@ namespace AntCreeping
             p.Dispose();
         }
 
-        protected void MyDrawCircle(float leftPosition)
+        protected void MyDrawCircle(float leftPosition, Color antColor)
         {
             Graphics g = Graphics.FromImage(finishingBmp);
-            Pen p = new Pen(nowColor, antWidth);
+            Pen p = new Pen(antColor, antWidth);
             g.DrawEllipse(p, startPoint.X + leftPosition, startPoint.Y - antWidth * 2, antWidth, antWidth);
             g.Dispose();
             p.Dispose();
@@ -100,7 +100,15 @@ namespace AntCreeping
             //Graphics tempGraphics = Graphics.FromImage(originBmp);
             //tempGraphics.DrawImage(finishingBmp, 0, 0);
             //tempGraphics.Dispose();
-            mainPictureGraphics.DrawImage(finishingBmp, new Point(0, 0));
+
+            try
+            {
+                mainPictureGraphics.DrawImage(finishingBmp, new Point(0, 0));
+            }
+            catch 
+            {
+
+            }
         }
 
         public void Clear()
