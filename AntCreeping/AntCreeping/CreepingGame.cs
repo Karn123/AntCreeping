@@ -73,6 +73,9 @@ namespace AntCreeping
         {
             return antHt.ContainsKey(ant.Position);
         }
+        /// <summary>
+        /// this method is called when the timer is actived
+        /// </summary>
         public void drivingGame()
         {
             if (!isGameOver)
