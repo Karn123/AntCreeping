@@ -13,7 +13,7 @@ using System.Collections;
 
 namespace AntCreeping
 {
-    public partial class Form1 : Form
+    public partial class PlayRoom : Form
     {
         float startTime;
         float nowTime;
@@ -122,7 +122,7 @@ namespace AntCreeping
 
             runThread.Abort();
         }
-        public Form1()
+        public PlayRoom()
         {
             InitializeComponent();
         }

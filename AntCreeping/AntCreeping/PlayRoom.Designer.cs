@@ -1,6 +1,6 @@
 ﻿namespace AntCreeping
 {
-    partial class Form1
+    partial class PlayRoom
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -95,7 +95,7 @@
             this.maxTimeLabel.Size = new System.Drawing.Size(0, 14);
             this.maxTimeLabel.TabIndex = 5;
             // 
-            // Form1
+            // PlayRoom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -106,8 +106,9 @@
             this.Controls.Add(this.TimeLabel);
             this.Controls.Add(this.MainPictureBox);
             this.Controls.Add(this.StartOrEndButton);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "PlayRoom";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "PlayRoom";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).EndInit();
             this.ResumeLayout(false);
