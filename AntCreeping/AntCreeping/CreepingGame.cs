@@ -71,7 +71,7 @@ namespace AntCreeping
 
         public bool isHavingCollision(Ant ant)
         {
-            return (antHt.ContainsKey(ant.Position));
+            return antHt.ContainsKey(ant.Position);
         }
         public void drivingGame()
         {
@@ -95,19 +95,14 @@ namespace AntCreeping
                         {
                             if (collisionAnt.Velocity > ant.Velocity)
                             {
-                                //collisionAnt.changeCreepDirection();
-                                //int i = antList.FindIndex( x => x.Equals((Ant)antHt[ant.Position]));
-                                //antList[i] = collisionAnt;
                                 ((Ant)antHt[ant.Position]).changeCreepDirection();
+                               
                             }   
                             else
                                 ant.changeCreepDirection();
                         }
                         else
                         {
-                            //collisionAnt.changeCreepDirection();
-                            //int i = antList.FindIndex(x => x.Equals((Ant)antHt[ant.Position]));
-                            //antList[i] = collisionAnt;
                             ((Ant)antHt[ant.Position]).changeCreepDirection();
                             ant.changeCreepDirection();
                         }

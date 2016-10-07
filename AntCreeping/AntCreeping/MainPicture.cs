@@ -100,7 +100,6 @@ namespace AntCreeping
             //Graphics tempGraphics = Graphics.FromImage(originBmp);
             //tempGraphics.DrawImage(finishingBmp, 0, 0);
             //tempGraphics.Dispose();
-
             try
             {
                 mainPictureGraphics.DrawImage(finishingBmp, new Point(0, 0));

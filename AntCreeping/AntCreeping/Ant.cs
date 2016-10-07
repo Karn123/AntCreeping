@@ -7,43 +7,12 @@ using System.Threading.Tasks;
 
 namespace AntCreeping
 {
-    public struct Neighbours
-    {
-        Ant leftNeighbour;
-        Ant rightNeighbour;
-
-        internal Ant LeftNeighbour
-        {
-            get
-            {
-                return leftNeighbour;
-            }
-
-            set
-            {
-                leftNeighbour = value;
-            }
-        }
-
-        internal Ant RightNeighbour
-        {
-            get
-            {
-                return rightNeighbour;
-            }
-
-            set
-            {
-                rightNeighbour = value;
-            }
-        }
-    }
     class Ant
     {
         private float position;
         private Toward toward;
         private float velocity;
-        public Neighbours antNeighbours; 
+        private int number;
         #region getter&setter
 
         public Toward CreepingToward
@@ -56,19 +25,6 @@ namespace AntCreeping
             set
             {
                 toward = value;
-            }
-        }
-
-        public Neighbours MyNeighbours
-        {
-            get
-            {
-                return antNeighbours;
-            }
-
-            set
-            {
-                antNeighbours = value;
             }
         }
 
@@ -98,13 +54,24 @@ namespace AntCreeping
             }
         }
 
+        public int Number
+        {
+            get
+            {
+                return number;
+            }
+
+            set
+            {
+                number = value;
+            }
+        }
+
         #endregion
 
         #region constructors
         public Ant()
         {
-            antNeighbours.LeftNeighbour = null;
-            antNeighbours.RightNeighbour = null;
             Position = 30f;
             Velocity = 5f; 
             toward = Toward.right;
@@ -116,11 +83,12 @@ namespace AntCreeping
             this.Velocity = velocity;
         }
 
-        public Ant(float position, Toward toward, float velocity)
+        public Ant(float position, Toward toward, float velocity,int number)
         {
             this.Position = position;
             this.toward = toward;
             this.Velocity = velocity;
+            this.number = number;
         }
         #endregion
         /// <summary>
@@ -132,45 +100,17 @@ namespace AntCreeping
                 toward = Toward.right;
             else toward = Toward.left;
         }
-        
-        /// <summary>
-        /// judge whether the ant has collision with another ant,note that if two ants collide in the 
-        /// same direction,the one with higher speed needs to change direction while the other needn't
-        /// </summary>
-        /// <param name="anotherAnt">another Ant</param>
-        /// <returns>true represents having collision</returns>
-        //public bool isHavingCollisionWith(Ant anotherAnt)
-        //{
-        //    if (position == anotherAnt.Position)
-        //    {
-        //        if (anotherAnt.CreepingToward != toward)
-        //            return true;
-        //        else
-        //        {
-        //            if ((toward == Toward.left && myNeighbours.LeftNeighbour == anotherAnt)
-        //               || (toward == Toward.right && myNeighbours.RightNeighbour == anotherAnt))
-        //            {
-        //                return true;
-        //            }
-        //            if (this.Velocity > anotherAnt.Velocity)
-        //                return true;
-        //            else
-        //                return false;
-        //        }
-        //    }
-        //    else
-        //        return false;
-        //}
-
+    
         /// <summary>
         /// creeping for incTime Time
         /// </summary>
         /// <param name="incTime">creeping time</param>
         public void creeping(int incTime)
         {
+            float distance = (float)Math.Round(Convert.ToDecimal((incTime * Velocity)), 2);
             if (toward == Toward.left)
-                Position -= incTime * Velocity;
-            else Position += incTime * Velocity;
+                Position -=  distance;
+            else Position += distance;
         }
     }
 }

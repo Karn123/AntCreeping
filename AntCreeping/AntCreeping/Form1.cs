@@ -17,7 +17,7 @@ namespace AntCreeping
     {
         float startTime;
         float nowTime;
-
+        public Thread runThread;
         private System.Timers.Timer aTimer = new System.Timers.Timer();
 
         public bool isStart = false;
@@ -27,8 +27,8 @@ namespace AntCreeping
         List<Ant> antList = new List<Ant>();
         public Hashtable ht = new Hashtable();
         Stick myStick = new Stick(MAXLENGTH);
-        public int[] pos = new int[] { 30, 80, 110, 160, 250 };
-        public float default_velocity = 0.08f * 50;
+        public int[] pos = new int[] {30, 80, 110, 160, 250};
+        public float default_velocity = 0.1f * 10;
         private float minTime;
         private float maxTime;
 
@@ -44,7 +44,7 @@ namespace AntCreeping
         {
             for (int i = 0; i < pos.Length; i++)
             {
-                Ant ant = new Ant(pos[i], dir[i], default_velocity);
+                Ant ant = new Ant(pos[i], dir[i], default_velocity,i+1);
                 ht.Add(pos[i], ant);
                 antList.Add(ant);
             }
@@ -63,6 +63,7 @@ namespace AntCreeping
 
             minTime = float.MaxValue;
             maxTime = float.MinValue;
+            int count = 1;
             //set each ant's direction
             for (int i = 0; i < 2; i++)
             {
@@ -94,7 +95,9 @@ namespace AntCreeping
                                 while (!creepingGame.IsGameOver)
                                 {
                                 }
-                                float timeInterval = (nowTime - startTime) * 50;
+                                int timeInterval = (int)((nowTime - startTime) * 10 / 1000);
+                                Console.WriteLine("Time "+count+":"+timeInterval.ToString()+"s");
+                                count++;
                                 if (timeInterval > maxTime)
                                     maxTime = timeInterval ;
                                 if (timeInterval < minTime)
@@ -104,8 +107,20 @@ namespace AntCreeping
                     }
                 }
             }
-            minTimeLabel.Text = minTime.ToString() + "ms";
-            maxTimeLabel.Text = maxTime.ToString() + "ms";
+            string min = minTime.ToString() + "s";
+            string max = maxTime.ToString() + "s";
+            Action<String> AsyncUIDelegate_1 = delegate (string text)
+            {
+                minTimeLabel.Text = text;
+            };
+            Action<String> AsyncUIDelegate_2 = delegate (string text)
+            {
+                maxTimeLabel.Text = text;
+            };
+            minTimeLabel.Invoke(AsyncUIDelegate_1, new object[] {min});
+            maxTimeLabel.Invoke(AsyncUIDelegate_2, new object[] {max});
+
+            runThread.Abort();
         }
         public Form1()
         {
@@ -120,14 +135,14 @@ namespace AntCreeping
             isStart = true;
             b.Visible = false;
             BmpAndGraphicInitialize();
-            PlayGames();
-            b.Visible = true;
+            runThread.Start();
             BmpAndGraphicRelease();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             aTimer.Elapsed += new ElapsedEventHandler(TimedEvent);
+            runThread = new Thread(new ThreadStart(PlayGames));
         }
 
         private void BmpAndGraphicInitialize()
@@ -152,7 +167,7 @@ namespace AntCreeping
 
         public void TimerSetup()
         {
-            aTimer.Interval = 16;    //配置文件中配置的秒数
+            aTimer.Interval = 20;    //配置文件中配置的秒数
             aTimer.Enabled = true;
         }
 
@@ -160,14 +175,13 @@ namespace AntCreeping
         {
             lock(this)
             {
-                nowTime += (float)aTimer.Interval;
                 if (creepingGame.IsGameOver)
                 {
                     MainPicture.GetInstance().Clear();
                     MainPicture.GetInstance().DrawStick(creepingGame.AntStick.Length);
                     for (int i = 0; i < creepingGame.AntList.Count; i++)
                     {
-                        MainPicture.GetInstance().DrawAnt(creepingGame.AntList[i].Position, creepingGame.AntList[i].CreepingToward, GetColor(creepingGame.AntList[i].GetAntNumber()));
+                        MainPicture.GetInstance().DrawAnt(creepingGame.AntList[i].Position, creepingGame.AntList[i].CreepingToward, GetColor(creepingGame.AntList[i].Number));
                     }
                     MainPicture.GetInstance().EndDraw();
                     aTimer.Enabled = false;
@@ -175,14 +189,14 @@ namespace AntCreeping
                 else
                 {
                     creepingGame.drivingGame();
+                    nowTime += (float)aTimer.Interval;
                     if (!creepingGame.IsGameOver)
                     {
                         MainPicture.GetInstance().Clear();
                         MainPicture.GetInstance().DrawStick(creepingGame.AntStick.Length);
                         for (int i = 0; i < creepingGame.AntList.Count; i++)
                         {
-                            Console.WriteLine(creepingGame.AntList.Count);
-                            MainPicture.GetInstance().DrawAnt(creepingGame.AntList[i].Position, creepingGame.AntList[i].CreepingToward, GetColor(creepingGame.AntList[i].GetAntNumber()));
+                            MainPicture.GetInstance().DrawAnt(creepingGame.AntList[i].Position, creepingGame.AntList[i].CreepingToward, GetColor(creepingGame.AntList[i].Number));
                         }
                         MainPicture.GetInstance().EndDraw();
                     }
@@ -203,7 +217,7 @@ namespace AntCreeping
                     break;
                 case 4:c = Color.Green;
                     break;
-                case 5:c = Color.AliceBlue;
+                case 5:c = Color.Black;
                     break;
                 default:
                     break;
