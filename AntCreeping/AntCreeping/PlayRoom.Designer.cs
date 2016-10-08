@@ -109,6 +109,8 @@
             this.Name = "PlayRoom";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PlayRoom";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PlayRoom_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.PlayRoom_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).EndInit();
             this.ResumeLayout(false);

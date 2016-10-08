@@ -28,7 +28,7 @@ namespace AntCreeping
         public Hashtable ht = new Hashtable();
         Stick myStick = new Stick(MAXLENGTH);
         public int[] pos = new int[] {30, 80, 110, 160, 250};
-        public float default_velocity = 0.1f * 10;
+        public float default_velocity = 0.1f * 50;
         private float minTime;
         private float maxTime;
 
@@ -95,7 +95,7 @@ namespace AntCreeping
                                 while (!creepingGame.IsGameOver)
                                 {
                                 }
-                                int timeInterval = (int)((nowTime - startTime) * 10 / 1000);
+                                int timeInterval = (int)((nowTime - startTime) * 50 / 1000);
                                 Console.WriteLine("Time "+count+":"+timeInterval.ToString()+"s");
                                 count++;
                                 if (timeInterval > maxTime)
@@ -223,6 +223,20 @@ namespace AntCreeping
                     break;
             }
             return c;
+        }
+
+        private void PlayRoom_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.Close();
+        }
+        /// <summary>
+        /// kill all the threads and exit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PlayRoom_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            System.Environment.Exit(0);
         }
     }
 }
